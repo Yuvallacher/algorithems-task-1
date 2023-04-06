@@ -1,16 +1,8 @@
 #include "Vertex.h"
 
-int Vertex::verticesCounter = 0;
-
-Vertex::Vertex()
-{
-	num = verticesCounter++;
-	color = "white";
-}
-
 Vertex::Vertex(int num) : num(num)
 {
-	color = "white";
+	visited = false;
 }
 
 bool Vertex::operator==(const Vertex& other) const

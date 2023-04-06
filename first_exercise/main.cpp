@@ -32,8 +32,7 @@ int main()
 			NDG->AddEdge(u, v);
 	}
 
-	if (DG->checkDegrees())
-		cout << "even" << endl;
+	DirectedGraph transpose = DG->getTransposeGraph(*DG);
 }
 
 

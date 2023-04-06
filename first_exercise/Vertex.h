@@ -6,12 +6,10 @@ using std::string;
 
 class Vertex
 {
-	static int verticesCounter;
 	int num;
-	string color;
+	bool visited;
 
 public:
-	Vertex();
 	Vertex(int num);
 	bool operator==(const Vertex& other) const;
 

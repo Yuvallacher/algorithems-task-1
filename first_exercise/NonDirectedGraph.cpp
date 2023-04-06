@@ -17,8 +17,21 @@ bool NonDirectedGraph::checkEvenDegrees() const
 
 	for (; itr != itrEnd && numofOddDegrees <= 2; ++itr)
 	{
-		if (itr->size() % 2 == 1)
+		if ((itr->size() - 1) % 2 == 1)
 			numofOddDegrees++;
 	}
 	return ((numofOddDegrees == 0) || (numofOddDegrees == 2));
+}
+
+
+bool NonDirectedGraph::checkConnectivity()
+{
+	string* colors = new string[numVertices];
+	for (int i = 0; i < numVertices; i++)
+		colors[i] = "white";
+	visit(edges[0].front(), colors);
+	for (int i = 0; i < numVertices; i++)
+		if (colors[i] != "black")
+			return false;
+	return true;
 }

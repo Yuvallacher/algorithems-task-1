@@ -11,7 +11,8 @@ public:
 	DirectedGraph(int n, int m);
 	virtual void AddEdge(Vertex u, Vertex v) override;
 	bool checkDegrees() const;
-	DirectedGraph& getTransposeGraph(DirectedGraph& other) const;
+	DirectedGraph getTransposeGraph(DirectedGraph& other) const;
+	virtual bool checkConnectivity() override;
 };
 
 

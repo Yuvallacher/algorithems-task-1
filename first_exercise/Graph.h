@@ -16,11 +16,12 @@ protected:
 public:
 	vector<list<Vertex>> edges;
 	Graph(int n, int m); 
-	list<Vertex> neighborList(int u)		const;
+	list<Vertex> neighborList(Vertex& u)		const;
 	bool areNeighbors(Vertex u, Vertex v)	const;
 	virtual void AddEdge(Vertex u, Vertex v) = 0;
-	void visit(Vertex u, string* colors, bool* edgesColors);
-	void markEdge(Vertex u, Vertex v, string* colors, bool* edgesColors);
+	virtual bool checkConnectivity() = 0;
+	void visit(Vertex u, string* colors);
+	void markEdge(Vertex& v);
 };
 
 

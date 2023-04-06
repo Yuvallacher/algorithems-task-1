@@ -31,19 +31,44 @@ bool DirectedGraph::checkDegrees() const
 }
 
 
-DirectedGraph& DirectedGraph::getTransposeGraph(DirectedGraph& other) const
+DirectedGraph DirectedGraph::getTransposeGraph(DirectedGraph& other) const
 {
 	DirectedGraph transpose(other.numVertices, other.numEdges);
 
 	for (int i = 0; i < other.edges.size(); i++)
 	{
-		list<Vertex> adjList = other.neighborList(i);
+		list<Vertex> adjList = other.neighborList(other.edges[i].front());
 		list<Vertex>::const_iterator itrTranspose = adjList.begin();
 		list<Vertex>::const_iterator itrEndTranspose = adjList.end();
+		++itrTranspose;
 		for (; itrTranspose != itrEndTranspose; ++itrTranspose)
 		{
-			transpose.AddEdge(*itrTranspose, i);
+			transpose.AddEdge(*itrTranspose, i+1);
 		}
 	}
 	return transpose;
+}
+
+
+bool DirectedGraph::checkConnectivity()
+{
+	string* colors = new string[numVertices];
+	for (int i = 0; i < numVertices; i++)
+		colors[i] = "white";
+	visit(edges[0].front(), colors);
+	for (int i = 0; i < numVertices; i++)
+		if (colors[i] != "black")
+			return false;
+
+	DirectedGraph transpose = getTransposeGraph(*this);
+
+	for (int i = 0; i < numVertices; i++)
+		colors[i] = "white";
+
+	transpose.visit(edges[0].front(), colors);
+	for (int i = 0; i < numVertices; i++)
+		if (colors[i] != "black")
+			return false;
+	
+	return true;
 }
