@@ -31,6 +31,9 @@ int main()
 		else
 			NDG->AddEdge(u, v);
 	}
+
+	if (DG->checkDegrees())
+		cout << "even" << endl;
 }
 
 

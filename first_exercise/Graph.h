@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <list>
+#include <string>
 
 using namespace std;
 
@@ -18,6 +19,8 @@ public:
 	list<int> neighborList(int u)	const;
 	bool areNeighbors(int u, int v)	const;
 	virtual void AddEdge(int u, int v) = 0;
+	void visit(int u, string* colors, bool* edgesColors);
+	void markEdge(int u, int v, string* colors, bool* edgesColors);
 };
 
 

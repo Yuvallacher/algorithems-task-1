@@ -5,9 +5,13 @@
 
 class DirectedGraph : public Graph
 {
+	vector<int> inDegree;
+	vector<int> outDegree;
 public:
 	DirectedGraph(int n, int m);
 	virtual void AddEdge(int u, int v) override;
+	bool checkDegrees() const;
+	DirectedGraph getTransposeGraph(DirectedGraph& other) const;
 };
 
 

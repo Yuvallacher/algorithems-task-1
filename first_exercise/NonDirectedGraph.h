@@ -8,6 +8,7 @@ class NonDirectedGraph : public Graph
 public:
 	NonDirectedGraph(int n, int m);
 	virtual void AddEdge(int u, int v) override;
+	bool checkEvenDegrees() const;
 };
 
 

@@ -17,8 +17,6 @@ list<int> Graph::neighborList(int u)  const
 }
 
 
-
-
 bool Graph::areNeighbors(int u, int v)	const
 {
 	list<int>::const_iterator itr = edges[u].begin();
@@ -29,3 +27,25 @@ bool Graph::areNeighbors(int u, int v)	const
 			return true;
 	return false;
 }
+
+
+void Graph::visit(int u, string* colors, bool* edgesColors)
+{
+	colors[u - 1] = "grey";
+	list<int> neighbors = this->neighborList(u);
+	list<int>::iterator itr = neighbors.begin();
+	list<int>::iterator itrEnd = neighbors.end();
+
+	for (; itr != itrEnd; ++itr)
+	{
+		//markEdge(u, *itr, colors, edgesColors);
+		visit(*itr, colors, edgesColors);
+	}
+	colors[u - 1] = "black";
+}
+
+//void Graph::markEdge(int u, int v, string* colors, bool* edgesColors)
+//{
+//	if (colors[v-1] == "white")
+//
+//}
