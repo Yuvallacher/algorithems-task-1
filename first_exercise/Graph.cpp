@@ -5,22 +5,22 @@ Graph::Graph(int n, int m)
 	numVertices = n;
 	numEdges = m;
 	edges.reserve(numVertices);
-	list<int> empty;
+	list<Vertex> empty;
 	for (int i = 0; i < numVertices; i++)
 		edges.push_back(empty);
 }
 
 
-list<int> Graph::neighborList(int u)  const
+list<Vertex> Graph::neighborList(int u)  const
 {
-	return edges[u];
+	return edges[u - 1];
 }
 
 
-bool Graph::areNeighbors(int u, int v)	const
+bool Graph::areNeighbors(Vertex u, Vertex v)	const
 {
-	list<int>::const_iterator itr = edges[u].begin();
-	list<int>::const_iterator itrEnd = edges[u].end();
+	list<Vertex>::const_iterator itr = edges[u.num - 1].begin();
+	list<Vertex>::const_iterator itrEnd = edges[u.num - 1].end();
 	
 	for (; itr != itrEnd; ++itr)
 		if (*(itr) == v)
@@ -29,19 +29,19 @@ bool Graph::areNeighbors(int u, int v)	const
 }
 
 
-void Graph::visit(int u, string* colors, bool* edgesColors)
+void Graph::visit(Vertex u, string* colors, bool* edgesColors)
 {
-	colors[u - 1] = "grey";
-	list<int> neighbors = this->neighborList(u);
-	list<int>::iterator itr = neighbors.begin();
-	list<int>::iterator itrEnd = neighbors.end();
+	colors[u.num - 1] = "grey";
+	list<Vertex> neighbors = this->neighborList(u.num);
+	list<Vertex>::iterator itr = neighbors.begin();
+	list<Vertex>::iterator itrEnd = neighbors.end();
 
 	for (; itr != itrEnd; ++itr)
 	{
 		//markEdge(u, *itr, colors, edgesColors);
 		visit(*itr, colors, edgesColors);
 	}
-	colors[u - 1] = "black";
+	colors[u.num - 1] = "black";
 }
 
 //void Graph::markEdge(int u, int v, string* colors, bool* edgesColors)

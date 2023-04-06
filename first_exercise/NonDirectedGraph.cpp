@@ -3,17 +3,17 @@
 NonDirectedGraph::NonDirectedGraph(int n, int m) : Graph(n, m)
 {}
 
-void NonDirectedGraph::AddEdge(int u, int v) 
+void NonDirectedGraph::AddEdge(Vertex u, Vertex v)
 {
-	edges[u - 1].push_back(v);
-	edges[v - 1].push_back(u);
+	edges[u.num - 1].push_back(v);
+	edges[v.num - 1].push_back(u);
 }
 
 bool NonDirectedGraph::checkEvenDegrees() const
 {
 	int numofOddDegrees = 0;
-	vector<list<int>>::const_iterator itr = edges.begin();
-	vector<list<int>>::const_iterator itrEnd = edges.end();
+	vector<list<Vertex>>::const_iterator itr = edges.begin();
+	vector<list<Vertex>>::const_iterator itrEnd = edges.end();
 
 	for (; itr != itrEnd && numofOddDegrees <= 2; ++itr)
 	{

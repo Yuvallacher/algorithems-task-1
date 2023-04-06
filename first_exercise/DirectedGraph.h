@@ -9,9 +9,9 @@ class DirectedGraph : public Graph
 	vector<int> outDegree;
 public:
 	DirectedGraph(int n, int m);
-	virtual void AddEdge(int u, int v) override;
+	virtual void AddEdge(Vertex u, Vertex v) override;
 	bool checkDegrees() const;
-	DirectedGraph getTransposeGraph(DirectedGraph& other) const;
+	DirectedGraph& getTransposeGraph(DirectedGraph& other) const;
 };
 
 

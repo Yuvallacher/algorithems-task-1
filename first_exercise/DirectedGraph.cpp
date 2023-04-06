@@ -11,11 +11,11 @@ DirectedGraph::DirectedGraph(int n, int m) : Graph(n, m)
 	}
 }
 
-void DirectedGraph::AddEdge(int u, int v)
+void DirectedGraph::AddEdge(Vertex u, Vertex v)
 {
-	edges[u - 1].push_back(v);
-	inDegree[v - 1]++;
-	outDegree[u - 1]++;
+	edges[u.num - 1].push_back(v);
+	inDegree[v.num - 1]++;
+	outDegree[u.num - 1]++;
 }
 
 bool DirectedGraph::checkDegrees() const
@@ -31,17 +31,18 @@ bool DirectedGraph::checkDegrees() const
 }
 
 
-DirectedGraph DirectedGraph::getTransposeGraph(DirectedGraph& other) const
+DirectedGraph& DirectedGraph::getTransposeGraph(DirectedGraph& other) const
 {
 	DirectedGraph transpose(other.numVertices, other.numEdges);
-	for ( int i = 0; i < other.edges.size(); i++)
+
+	for (int i = 0; i < other.edges.size(); i++)
 	{
-		list<int> adjList = other.neighborList(i);
-		list<int>::const_iterator itr = adjList.begin();
-		list<int>::const_iterator itrEnd = adjList.end();
-		for (; itr != itrEnd; ++itr)
+		list<Vertex> adjList = other.neighborList(i);
+		list<Vertex>::const_iterator itrTranspose = adjList.begin();
+		list<Vertex>::const_iterator itrEndTranspose = adjList.end();
+		for (; itrTranspose != itrEndTranspose; ++itrTranspose)
 		{
-			transpose.AddEdge(*itr, i);
+			transpose.AddEdge(*itrTranspose, i);
 		}
 	}
 	return transpose;

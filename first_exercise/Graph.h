@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <list>
-#include <string>
+#include "Vertex.h"
 
 using namespace std;
 
@@ -14,13 +14,13 @@ protected:
 	int numEdges;
 
 public:
-	vector<list<int>> edges;
+	vector<list<Vertex>> edges;
 	Graph(int n, int m); 
-	list<int> neighborList(int u)	const;
-	bool areNeighbors(int u, int v)	const;
-	virtual void AddEdge(int u, int v) = 0;
-	void visit(int u, string* colors, bool* edgesColors);
-	void markEdge(int u, int v, string* colors, bool* edgesColors);
+	list<Vertex> neighborList(int u)		const;
+	bool areNeighbors(Vertex u, Vertex v)	const;
+	virtual void AddEdge(Vertex u, Vertex v) = 0;
+	void visit(Vertex u, string* colors, bool* edgesColors);
+	void markEdge(Vertex u, Vertex v, string* colors, bool* edgesColors);
 };
 
 
