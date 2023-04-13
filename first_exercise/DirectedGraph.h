@@ -13,6 +13,8 @@ public:
 	bool checkDegrees() const;
 	DirectedGraph getTransposeGraph(DirectedGraph& other) const;
 	virtual bool checkConnectivity() override;
+	virtual bool isAulerian() override;
+	virtual list<Vertex> findCircuit(Vertex& v) override;
 };
 
 

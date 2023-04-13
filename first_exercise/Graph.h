@@ -4,7 +4,7 @@
 #include <vector>
 #include <list>
 #include "Vertex.h"
-
+#include <iostream>
 using namespace std;
 
 class Graph
@@ -12,17 +12,24 @@ class Graph
 protected:
 	int numVertices;
 	int numEdges;
-
+	
 public:
-	vector<list<Vertex>> edges;
+	vector<pair<list<Vertex>, list<Vertex>::iterator> > edges;
 	Graph(int n, int m); 
-	list<Vertex> neighborList(Vertex& u)		const;
-	bool areNeighbors(Vertex u, Vertex v)	const;
+	list<Vertex> neighborList(const Vertex& u)		const;
+	bool areNeighbors(const Vertex& u, const Vertex& v)	const;
 	virtual void AddEdge(Vertex u, Vertex v) = 0;
 	virtual bool checkConnectivity() = 0;
-	void visit(Vertex u, string* colors);
+	void visit(const Vertex& u, string* colors) ;
 	void markEdge(Vertex& v);
+	void getNextUnmarkedEdge(int i);
+	virtual bool isAulerian()  = 0;
+	virtual list<Vertex> findCircuit(Vertex& v) = 0;
+	list<Vertex> euler();
+	void getNextVertexWithUnusedEdges(list<Vertex>::iterator& itr, const list<Vertex>& list);
+	void printEulerCircuit(const list<Vertex>& euler) const;
 };
+
 
 
 #endif

@@ -9,3 +9,8 @@ bool Vertex::operator==(const Vertex& other) const
 {
 	return num == other.num;
 }
+
+int Vertex::getNum() const
+{
+	return num;
+}

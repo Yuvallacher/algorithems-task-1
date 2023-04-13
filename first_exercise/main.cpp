@@ -12,14 +12,21 @@ int main()
 	int u, v;
 	char directed;
 	cout << "Is the graph directed: y/n ";
-	cin >> directed >> n >> m;
+	cin >> directed >> n >> m;	
 	Graph* g;
 	
-	if (directed == 'y')
-		g = new DirectedGraph(n, m);
-	else
-		g = new NonDirectedGraph(n, m);
-	
+	try
+	{
+		if (directed == 'y')
+			g = new DirectedGraph(n, m);
+		else
+			g = new NonDirectedGraph(n, m);
+	}
+	catch (const char* msg)
+	{
+		cout << msg << endl;
+		exit(1);
+	}
 	DirectedGraph* DG = dynamic_cast<DirectedGraph*>(g);
 	NonDirectedGraph* NDG = dynamic_cast<NonDirectedGraph*>(g);
 
@@ -32,7 +39,29 @@ int main()
 			NDG->AddEdge(u, v);
 	}
 
-	DirectedGraph transpose = DG->getTransposeGraph(*DG);
+
+	if (DG)
+	{
+		if (DG->isAulerian())
+		{
+			list<Vertex> eulerCircuit = DG->euler();
+			cout << "The graph is aulerian\n";
+			DG->printEulerCircuit(eulerCircuit);
+		}
+		else
+			cout << "The graph is not aulerian\n";
+	}
+	else
+	{
+		if (NDG->isAulerian())
+		{
+			list<Vertex> eulerCircuit = NDG->euler();
+			cout << "The graph is aulerian\n";
+			NDG->printEulerCircuit(eulerCircuit);
+		}
+		else
+			cout << "The graph is not aulerian\n";
+	}
 }
 
 
