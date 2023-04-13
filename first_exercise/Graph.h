@@ -12,24 +12,22 @@ class Graph
 protected:
 	int numVertices;
 	int numEdges;
+	vector<pair<list<Vertex>, list<Vertex>::iterator>> edges;
 	
 public:
-	vector<pair<list<Vertex>, list<Vertex>::iterator> > edges;
 	Graph(int n, int m); 
-	list<Vertex> neighborList(const Vertex& u)		const;
+	list<Vertex> neighborList(const Vertex& u)			const;
 	bool areNeighbors(const Vertex& u, const Vertex& v)	const;
 	virtual void AddEdge(Vertex u, Vertex v) = 0;
 	virtual bool checkConnectivity() = 0;
 	void visit(const Vertex& u, string* colors) ;
-	void markEdge(Vertex& v);
 	void getNextUnmarkedEdge(int i);
-	virtual bool isAulerian()  = 0;
+	virtual bool isAulerian() = 0;
 	virtual list<Vertex> findCircuit(Vertex& v) = 0;
 	list<Vertex> euler();
 	void getNextVertexWithUnusedEdges(list<Vertex>::iterator& itr, const list<Vertex>& list);
 	void printEulerCircuit(const list<Vertex>& euler) const;
 };
-
 
 
 #endif

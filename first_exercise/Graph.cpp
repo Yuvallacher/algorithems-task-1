@@ -5,19 +5,18 @@ Graph::Graph(int n, int m)
 {
 	numVertices = n;
 	numEdges = m;
-	if (n <= 0)
+	if (n <= 0 || m < 0)
 	{
 		throw "invalid input";
 	}
 	edges.reserve(numVertices);
+
 	for (int i = 0; i < numVertices; i++)
 	{
 		list<Vertex> dummy;
 		dummy.push_back(i + 1);
 		edges.push_back(make_pair(dummy, dummy.begin()));
-	}
-	for (int i = 0; i < numVertices; i++) // set iterator to the beginning of each list
-	{
+		
 		edges[i].second = edges[i].first.begin();
 		Vertex& v = *(edges[i].second);
 		v.visited = true;
@@ -43,24 +42,6 @@ bool Graph::areNeighbors(const Vertex& u, const Vertex& v)	const
 }
 
 
-//void Graph::visit(Vertex u, string* colors) 
-//{
-//	if (colors[u.num - 1] != "white")
-//		return;
-//
-//	colors[u.num - 1] = "gray";		// colors is a new array with colors for the vertices, we need to create and initialize it before the call to visit
-//	list<Vertex> neighbors = this->neighborList(u);
-//	list<Vertex>::iterator itr = neighbors.begin();
-//	list<Vertex>::iterator itrEnd = neighbors.end();
-//
-//	for (; itr != itrEnd; ++itr)
-//	{
-//		markEdge(*itr);
-//		visit(*itr, colors);
-//	}
-//	colors[u.num - 1] = "black";
-//}
-
 void Graph::visit(const Vertex& u, string* colors) 
 {
 	colors[u.num - 1] = "gray";		// colors is a new array with colors for the vertices, we need to create and initialize it before the call to visit
@@ -73,7 +54,6 @@ void Graph::visit(const Vertex& u, string* colors)
 		Vertex& v = *itr;
 		if (colors[v.num - 1] == "white")
 		{
-			markEdge(*itr);
 			visit(*itr, colors);
 		}
 	}
@@ -81,22 +61,15 @@ void Graph::visit(const Vertex& u, string* colors)
 }
 
 
-void Graph::markEdge(Vertex& v)
-{
-	if (v.visited) // we've been to this vertex before
-		return;
-	else
-		v.visited = true;
-}
-
 void Graph::getNextUnmarkedEdge(int i)
 {	
 	bool visited;
 	do {
-		edges[i-1].second = next(edges[i-1].second); // move iterator to next neighbor
-		Vertex& v = *(edges[i-1].second);
+		Vertex& v = *(edges[i - 1].second);
+		if (v.visited)
+			edges[i - 1].second = next(edges[i - 1].second); // move iterator to next neighbor
 		visited = v.visited;
-	} while (visited == true && edges[i-1].second != prev(edges[i-1].first.end()) );
+	} while (visited == true && edges[i - 1].second != prev(edges[i - 1].first.end()));
 }
 
 list<Vertex> Graph::euler()
@@ -120,15 +93,18 @@ list<Vertex> Graph::euler()
 
 void Graph::getNextVertexWithUnusedEdges(list<Vertex>::iterator& itr, const list<Vertex>& list)
 {
-	Vertex* last_neighbor_of_v = nullptr;
 	int vertexNum;
+	bool w_has_unused_edge;
 	do {
 		itr = next(itr);
 		Vertex& v = *(itr);
 		vertexNum = v.getNum();
-		last_neighbor_of_v = &(*(prev(edges[vertexNum - 1].first.end())));
-		//} while ( next(edges[vertexNum - 1].second) == edges[vertexNum - 1].first.end() && itr != prev(list.end()) ); // v doesnt have unused edges
-	} while ( last_neighbor_of_v->visited == true && itr != prev(list.end())); // v doesnt have unused edges
+		Vertex& u = *(edges[vertexNum - 1].second);
+		if (u.visited && edges[vertexNum - 1].second != prev(edges[vertexNum - 1].first.end()))
+			this->getNextUnmarkedEdge(vertexNum);
+		Vertex& w = *(edges[vertexNum - 1].second);
+		w_has_unused_edge = w.visited;
+	} while (w_has_unused_edge && next(edges[vertexNum - 1].second) == edges[vertexNum - 1].first.end() && itr != prev(list.end())); // v doesnt have unused edges
 }
 
 void Graph::printEulerCircuit(const list<Vertex>& euler) const

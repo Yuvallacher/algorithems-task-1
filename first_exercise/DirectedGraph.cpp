@@ -11,8 +11,11 @@ DirectedGraph::DirectedGraph(int n, int m) : Graph(n, m)
 	}
 }
 
+
 void DirectedGraph::AddEdge(Vertex u, Vertex v)
 {
+	if (u.num > numVertices || u.num < 0 || v.num > numVertices || v.num < 0)
+		throw "invalid input";
 	edges[u.num - 1].first.push_back(v);
 	inDegree[v.num - 1]++;
 	outDegree[u.num - 1]++;
@@ -82,16 +85,16 @@ bool DirectedGraph::isAulerian()
 
 list<Vertex> DirectedGraph::findCircuit(Vertex& v) 
 {
-	Vertex& ver = v;
+	Vertex* ver = &v;
 	list<Vertex> circuitList;
 	circuitList.push_back(v);
 	do {
-		this->getNextUnmarkedEdge(ver.num);
-		list<Vertex>::iterator itr = edges[ver.num - 1].second;
+		this->getNextUnmarkedEdge((*ver).num);
+		list<Vertex>::iterator itr = edges[(*ver).num - 1].second;
 		Vertex& u = *(itr);
 		u.visited = true; // mark (v,u)
 		circuitList.push_back(u);
-		ver = u;
-	} while (next(edges[ver.num - 1].second) != edges[ver.num - 1].first.end());
+		ver = &u;
+	} while (next(edges[(*ver).num - 1].second) != edges[(*ver).num - 1].first.end());
 	return circuitList;
 }
