@@ -15,4 +15,4 @@ public:
 };
 
 
-#endif _NON_DIRECTED_GRAPH_H
+#endif //_NON_DIRECTED_GRAPH_H

@@ -1,2 +1,9 @@
-﻿  NonDirectedGraph.cpp
+﻿  DirectedGraph.cpp
+C:\Users\User\source\repos\algorithems\first_exercise\first_exercise\DirectedGraph.cpp(26,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User\source\repos\algorithems\first_exercise\first_exercise\DirectedGraph.cpp(41,20): warning C4018: '<': signed/unsigned mismatch
+  Graph.cpp
+  NonDirectedGraph.cpp
+  Vertex.cpp
+  main.cpp
+  Generating Code...
   first_exercise.vcxproj -> C:\Users\User\source\repos\algorithems\first_exercise\Debug\first_exercise.exe

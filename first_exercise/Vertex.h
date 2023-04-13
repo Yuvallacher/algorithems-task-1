@@ -22,4 +22,4 @@ public:
 };
 
 
-#endif _VERTEX_H
+#endif //_VERTEX_H
